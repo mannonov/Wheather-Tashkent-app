@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.MainActivity"
     android:background="@drawable/ic_backgraound">
 
     <ImageView
         android:id="@+id/weather_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -323,6 +323,16 @@
     </LinearLayout>
 
 
-
+    <TextView
+        android:id="@+id/network_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Ofllayn"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
