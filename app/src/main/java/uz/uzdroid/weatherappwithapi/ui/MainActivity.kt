@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             if (info != null) {
                 if (info!!.state == NetworkInfo.State.CONNECTED) {
                     Toast.makeText(context, "CONNECTED", Toast.LENGTH_LONG).show()
-                    binding.networkType.text = "Online"
+                    binding.tvNetworkType.text = "Online"
 
                     val client = OkHttpClient()
 
@@ -72,11 +72,10 @@ class MainActivity : AppCompatActivity() {
                                 val iconType = desc.get("icon").toString()
 
                                 runOnUiThread {
-                                    binding.tvWeatherGradus.text = "$temp°"
-                                    binding.tvWeatherWind.text = windSpeed
-                                    binding.tvWeatherHumidity.text = humidity
-                                    binding.dayType.text = desc2
-                                    binding.tvCurrentDate.text = currentDate()
+                                    binding.tvGradusWheather.text = temp
+                                    binding.tvDayType.text = desc2
+                                    binding.tvWeekDay.text = currentDay()
+                                    binding.tvTime.text = currentDate()
                                     replaceWheatherIcon(iconType)
                                 }
                                 val info = Info(
@@ -105,16 +104,15 @@ class MainActivity : AppCompatActivity() {
                 val database = InfoDatabase.getInstance(application)
                 val infoDao = database.infoDao()
                 Toast.makeText(context, "NOT CONNECTED", Toast.LENGTH_LONG).show()
-                binding.networkType.text = "Offline"
+                binding.tvNetworkType.text = "Offline"
 
                runOnUiThread {
 
                         infoDao.queryAllInfo().observe(this, androidx.lifecycle.Observer {
-                            binding.tvWeatherGradus.text = it.temp
-                            binding.tvWeatherWind.text = it.speed
-                            binding.tvWeatherHumidity.text = it.humidity
-                            binding.dayType.text = it.description
-                            binding.tvCurrentDate.text = currentDate()
+                            binding.tvGradusWheather.text = it.temp
+                            binding.tvDayType.text = it.description
+                            binding.tvTime.text = currentDate()
+                            binding.tvWeekDay.text = currentDay()
                             replaceWheatherIcon(it.icon)
                         }
                         )
@@ -127,47 +125,46 @@ class MainActivity : AppCompatActivity() {
 
         when (iconCode) {
 
-            "01d" -> binding.weatherIcon.setImageResource(R.drawable.w_clear_sky)
-            "02d" -> binding.weatherIcon.setImageResource(R.drawable.w_few_clouds)
-            "03d" -> binding.weatherIcon.setImageResource(R.drawable.w_scattered_clouds)
-            "04d" -> binding.weatherIcon.setImageResource(R.drawable.w_broken_clouds)
-            "09d" -> binding.weatherIcon.setImageResource(R.drawable.w_shower_rain)
-            "10d" -> binding.weatherIcon.setImageResource(R.drawable.w_rain)
-            "11d" -> binding.weatherIcon.setImageResource(R.drawable.w_thunderstorm)
-            "13d" -> binding.weatherIcon.setImageResource(R.drawable.w_snow)
-            "50d" -> binding.weatherIcon.setImageResource(R.drawable.w_mist)
+            "01d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_clear_sky)
+            "02d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_few_clouds)
+            "03d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_scattered_clouds)
+            "04d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_broken_clouds)
+            "09d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_shower_rain)
+            "10d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_rain)
+            "11d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_thunderstorm)
+            "13d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_snow)
+            "50d" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_mist)
 
-            "01n" -> binding.weatherIcon.setImageResource(R.drawable.w_clear_sky_night)
-            "02n" -> binding.weatherIcon.setImageResource(R.drawable.w_few_clouds)
-            "03n" -> binding.weatherIcon.setImageResource(R.drawable.w_scattered_clouds)
-            "04n" -> binding.weatherIcon.setImageResource(R.drawable.w_broken_clouds)
-            "09n" -> binding.weatherIcon.setImageResource(R.drawable.w_shower_rain)
-            "10n" -> binding.weatherIcon.setImageResource(R.drawable.w_rain)
-            "11n" -> binding.weatherIcon.setImageResource(R.drawable.w_thunderstorm)
-            "13n" -> binding.weatherIcon.setImageResource(R.drawable.w_snow)
-            "50n" -> binding.weatherIcon.setImageResource(R.drawable.w_mist)
+            "01n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_clear_sky)
+            "02n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_few_clouds)
+            "03n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_scattered_clouds)
+            "04n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_broken_clouds)
+            "09n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_shower_rain)
+            "10n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_rain)
+            "11n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_thunderstorm)
+            "13n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_snow)
+            "50n" -> binding.imgWheatherIcon.setImageResource(R.drawable.ic_w_mist)
         }
 
     }
 
-    private fun currentDate(): String {
+    private fun currentDay():String{
         val current: Calendar = Calendar.getInstance()
-        val month = current.get(Calendar.MONTH)
-        val day = current.get(Calendar.DAY_OF_MONTH)
-        val name = current.get(Calendar.DAY_OF_WEEK)
-        val year = current.get(Calendar.YEAR)
-        val hour = current.get(Calendar.HOUR_OF_DAY)
-        val minut = current.get(Calendar.MINUTE)
+        val day= current.get(Calendar.DAY_OF_WEEK)
 
-        val monthName = arrayOf(
-            "January", "February", "March", "April",
-            "May", "June", "July", "August", "September",
-            "October", "November", "December"
-        )
         val dayName = arrayOf(
             "Saturday", "Sunday", "Monday",
             "Tuesday", "Wednesday", "Thursday", "Friday"
         )
-        return "${dayName[name]}, $day ${monthName[month]}  $year $hour:$minut"
+
+        return dayName[day]
+    }
+
+    private fun currentDate(): String {
+        val current: Calendar = Calendar.getInstance()
+        val hour = current.get(Calendar.HOUR_OF_DAY)
+        val minut = current.get(Calendar.MINUTE)
+
+        return "$hour:$minut"
     }
 }
