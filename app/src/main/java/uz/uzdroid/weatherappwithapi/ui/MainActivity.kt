@@ -118,14 +118,9 @@ class MainActivity : AppCompatActivity() {
                             replaceWheatherIcon(it.icon)
                         }
                         )
-
                     }
-
-
             }
         }
-
-
     }
 
     private fun replaceWheatherIcon(iconCode: String?) {
